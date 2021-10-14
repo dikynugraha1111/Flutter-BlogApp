@@ -17,9 +17,11 @@ class SearchPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Search Page"),
         backgroundColor: Colors.white,
-        leading: const Icon(
-          Icons.arrow_back,
-          color: Colors.black,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
         ),
       ),
       body: BlocProvider<SearchResultBloc>(
@@ -58,7 +60,7 @@ class _SearchViewState extends State<SearchView> {
 
   void _onScroll() {
     SearchResultBloc _repository = context.read<SearchResultBloc>();
-    //TO-DO: lazy loading when there is no scrolling
+    // TODO: lazy loading when there is no scrolling
     if (_isBottom && _repository is! SearchResultFinish) {
       _repository.add(const SearchResultFetching());
     }
@@ -67,7 +69,7 @@ class _SearchViewState extends State<SearchView> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      controller: _scrollController,
+      //controller: _scrollController,
       child: Container(
         padding: const EdgeInsets.all(20.0),
         child: Column(

@@ -14,7 +14,6 @@ class SearchResultTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final int randomSeed = Random().nextInt(100);
     return Container(
       padding: const EdgeInsets.all(19.0),
       decoration: BoxDecoration(

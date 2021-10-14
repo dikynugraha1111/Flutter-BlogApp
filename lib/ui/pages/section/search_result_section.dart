@@ -31,8 +31,21 @@ class _SearchResultSectionState extends State<SearchResultSection> {
           const SizedBox(height: 7),
           ListView.builder(
             shrinkWrap: true,
-            itemCount: _repository.state.result?.length ?? 0,
+            itemCount: (_repository.state is SearchResultFinish)
+                ? (_repository.state.result!.length)
+                : (_repository.state.result!.length + 1),
             itemBuilder: (context, index) {
+              if (index >= _repository.state.result!.length) {
+                if (_repository.state is! SearchResultLazyLoading) {
+                  _repository.add(const SearchResultFetching());
+                }
+                return const Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.black,
+                    strokeWidth: 6.0,
+                  ),
+                );
+              }
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 7),
                 child: SearchResultTile(
@@ -41,13 +54,6 @@ class _SearchResultSectionState extends State<SearchResultSection> {
               );
             },
           ),
-          if (_repository.state is SearchResultLazyLoading)
-            const Center(
-              child: CircularProgressIndicator(
-                color: Colors.black,
-                strokeWidth: 6.0,
-              ),
-            ),
         ],
       );
     } else {
