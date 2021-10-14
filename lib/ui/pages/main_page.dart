@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_blog_app/provider/login_page_provider.dart';
 import 'package:flutter_blog_app/shared/app_route.dart';
 import 'package:flutter_blog_app/shared/theme.dart';
 import 'package:flutter_blog_app/ui/widgets/main/main_post_widget.dart';
 import 'package:flutter_blog_app/ui/widgets/main/quarter_circle_widget.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 import '../../shared/photo.dart';
 
@@ -28,31 +30,38 @@ class MainPage extends StatelessWidget {
                       width: 72,
                     ),
                   ),
-                  InkWell(
-                    child: Stack(
-                      alignment: Alignment.centerRight,
-                      children: <Widget>[
-                        const SizedBox(
-                          width: 55,
-                          height: 55,
-                          child: QuarterCircle(
-                            circleAlignment: CircleAlignment.topRight,
-                            color: greyColor,
-                          ),
+                  Consumer<VisibilityPassword>(
+                    builder: (context, token, child) {
+                      return InkWell(
+                        child: Stack(
+                          alignment: Alignment.centerRight,
+                          children: <Widget>[
+                            const SizedBox(
+                              width: 55,
+                              height: 55,
+                              child: QuarterCircle(
+                                circleAlignment: CircleAlignment.topRight,
+                                color: greyColor,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 10),
+                              child: SvgPicture.asset(
+                                'assets/vector/ic_switch_account.svg',
+                                width: 30,
+                              ),
+                            )
+                          ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
-                          child: SvgPicture.asset(
-                            'assets/vector/ic_switch_account.svg',
-                            width: 30,
-                          ),
-                        )
-                      ],
-                    ),
-                    onTap: () {
-                      Navigator.pushNamed(context, AppRoute.loginRoute);
+                        onTap: () {
+                          token.token == "token"
+                              ? Navigator.pushNamed(
+                                  context, AppRoute.loginRoute)
+                              : Navigator.of(context).pop();
+                        },
+                      );
                     },
-                  ),
+                  )
                 ],
               ),
               Row(
@@ -76,7 +85,7 @@ class MainPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 31, left: 10),
                     child: Text(
-                      'username',
+                      context.watch<VisibilityPassword>().name,
                       style: greyTextFont.copyWith(
                           fontWeight: semiBold, fontSize: 20),
                     ),

@@ -1,7 +1,14 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_blog_app/model/req_res_login_model.dart';
+import 'package:flutter_blog_app/network/login_network.dart';
+import 'package:flutter_blog_app/provider/login_page_provider.dart';
 import 'package:flutter_blog_app/shared/theme.dart';
 import 'package:flutter_blog_app/ui/widgets/login/form_login_widget.dart';
 import 'package:flutter_blog_app/ui/widgets/login/header_login_widget.dart';
+import 'package:provider/provider.dart';
+import '../../shared/app_route.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -24,7 +31,11 @@ class _LoginPageState extends State<LoginPage> {
           vertical: 65,
         ),
         children: [
-          const HeaderLogin(),
+          HeaderLogin(
+            back: () {
+              Navigator.of(context).pop();
+            },
+          ),
           Form(
             key: formKey,
             child: ListView(
@@ -75,7 +86,36 @@ class _LoginPageState extends State<LoginPage> {
                       width: MediaQuery.of(context).size.width,
                       height: 40.0,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          if (!formKey.currentState!.validate()) {
+                            return;
+                          }
+                          formKey.currentState!.save();
+                          LoginApiModel _loginClient =
+                              await LoginClient.loginCheck(
+                            email: email,
+                            password: password,
+                          );
+                          if (_loginClient.code == null) {
+                            context.read<VisibilityPassword>().changeAccount(
+                                _loginClient.userDisplayName!,
+                                _loginClient.token!);
+
+                            Navigator.pushReplacementNamed(
+                              context,
+                              AppRoute.mainRoute,
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  _loginClient.code ??
+                                      'Oops! Something is wrong...',
+                                ),
+                              ),
+                            );
+                          }
+                        },
                         style: ElevatedButton.styleFrom(
                           primary: blueColor,
                           shape: RoundedRectangleBorder(
@@ -105,7 +145,9 @@ class _LoginPageState extends State<LoginPage> {
                       width: MediaQuery.of(context).size.width,
                       height: 40.0,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
                         style: ElevatedButton.styleFrom(
                           primary: whiteColor,
                           shape: RoundedRectangleBorder(
