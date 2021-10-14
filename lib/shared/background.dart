@@ -1,7 +1,7 @@
 import 'dart:math';
 
 class Background {
-  static const List _BackroundUrl = [
+  static const List _BackgrounddUrl = [
     'https://images.unsplash.com/photo-1510511459019-5dda7724fd87?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=900&ixid=MnwxfDB8MXxyYW5kb218MHx8dGVjaG5vbG9neSwgY29kZXx8fHx8fDE2MzQxNzQxNTg&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1600',
     'https://images.unsplash.com/photo-1498050108023-c5249f4df085?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=900&ixid=MnwxfDB8MXxyYW5kb218MHx8dGVjaG5vbG9neSwgY29kZXx8fHx8fDE2MzQxNzQxODI&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1600',
     'https://images.unsplash.com/photo-1511376777868-611b54f68947?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=900&ixid=MnwxfDB8MXxyYW5kb218MHx8dGVjaG5vbG9neSwgY29kZXx8fHx8fDE2MzQxNzQyMDI&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1600',
@@ -16,6 +16,6 @@ class Background {
 
   static String randomBackground() {
     final _random = Random();
-    return _BackroundUrl[_random.nextInt(_BackroundUrl.length)];
+    return _BackgrounddUrl[_random.nextInt(_BackgrounddUrl.length)];
   }
 }

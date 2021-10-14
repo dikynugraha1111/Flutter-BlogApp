@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_blog_app/ui/pages/login_page.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_blog_app/ui/pages/splash_screen_page.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
 import 'provider/login_page_provider.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      systemNavigationBarColor: Colors.black, // navigation bar color
+      statusBarColor: Colors.white, // status bar
+      statusBarIconBrightness: Brightness.dark // color
+      ));
   runApp(const MyApp());
 }
 
@@ -26,7 +32,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           initialRoute: '/',
           routes: {
-            '/': (context) => const LoginPage(),
+            '/': (context) => const SplashScreenPage(),
           },
           // home: LoginPage(),
         );
