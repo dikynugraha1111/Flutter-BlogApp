@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blog_app/shared/app_route.dart';
 import 'package:flutter_blog_app/shared/theme.dart';
@@ -107,11 +108,11 @@ class MainPage extends StatelessWidget {
               const SizedBox(
                 height: 58,
               ),
-              SizedBox(
+              Container(
                 width: 352,
-                height: MediaQuery.of(context).size.height,
+                alignment: Alignment.center,
                 child: ListView.builder(
-                  primary: true,
+                  primary: false,
                   shrinkWrap: true,
                   scrollDirection: Axis.vertical,
                   itemCount: 10,
