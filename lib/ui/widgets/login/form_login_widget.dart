@@ -46,7 +46,8 @@ class FormLoginWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      obscureText: context.watch<VisibilityPassword>().isVisible,
+      obscureText:
+          needObscure ? context.watch<VisibilityPassword>().isVisible : false,
       initialValue: initial ? initialText : null,
       keyboardType: inputType,
       inputFormatters: _inputFormatters,
