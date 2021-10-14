@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart';
 
 import '../../model/search_result.dart';
-import '../../model/services/search_services.dart';
+import '../../network/search_network.dart';
 
 part 'search_res_event.dart';
 part 'search_res_state.dart';
@@ -39,7 +39,7 @@ class SearchResultBloc extends Bloc<SearchResultEvent, SearchResultState> {
     SearchResultInitialized event,
     Emitter<SearchResultState> emit,
   ) async {
-    SearchService _searchService = SearchService();
+    SearchNetwork _searchService = SearchNetwork();
     emit(const SearchResultInitialLoading());
     Response? _response = await _searchService.getResponse(
       query: event.searchQuery,
@@ -75,7 +75,7 @@ class SearchResultBloc extends Bloc<SearchResultEvent, SearchResultState> {
       emit(SearchResultFinish(result: state.result));
       return;
     }
-    SearchService _searchService = SearchService();
+    SearchNetwork _searchService = SearchNetwork();
     emit(SearchResultLazyLoading(
       currentResult: state.result,
     ));

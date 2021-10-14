@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 
-class SearchService {
+class SearchNetwork {
   final String authorityUrl = "gits-msib.my.id";
   final String endpointUrl = "/wp-json/wp/v2/search";
 
