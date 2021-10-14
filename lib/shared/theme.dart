@@ -6,7 +6,6 @@ const blackColor = Color(0xFF000000);
 const greyColor = Color(0xFF353D49);
 const pinkColor = Color(0xFFE91E63);
 const whiteColor = Color(0xFFF5F5F5);
-
 const redColor = Color(0xFFFF5722);
 
 // Noted GlobalFontWeight
