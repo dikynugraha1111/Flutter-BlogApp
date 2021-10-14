@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_blog_app/shared/app_route.dart';
 import 'package:flutter_blog_app/shared/theme.dart';
 
 class HeaderLogin extends StatelessWidget {
@@ -11,8 +12,13 @@ class HeaderLogin extends StatelessWidget {
       shrinkWrap: true,
       children: [
         Row(
-          children: const [
-            Icon(Icons.arrow_back_rounded, size: 24.0),
+          children: [
+            InkWell(
+              child: const Icon(Icons.arrow_back_rounded, size: 24.0),
+              onTap: () {
+                Navigator.pushReplacementNamed(context, AppRoute.mainRoute);
+              },
+            ),
           ],
         ),
         const SizedBox(
