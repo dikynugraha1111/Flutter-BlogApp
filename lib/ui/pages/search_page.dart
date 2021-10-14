@@ -6,7 +6,7 @@ import '../../bloc/search_result/search_res_bloc.dart';
 import '../widgets/search/search_text_input.dart';
 import 'package:provider/provider.dart';
 
-import 'section/search_result_section.dart';
+import '../widgets/search/search_result_section.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -60,7 +60,6 @@ class _SearchViewState extends State<SearchView> {
 
   void _onScroll() {
     SearchResultBloc _repository = context.read<SearchResultBloc>();
-    // TODO: lazy loading when there is no scrolling
     if (_isBottom && _repository is! SearchResultFinish) {
       _repository.add(const SearchResultFetching());
     }
@@ -69,7 +68,7 @@ class _SearchViewState extends State<SearchView> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      //controller: _scrollController,
+      controller: _scrollController,
       child: Container(
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -109,7 +108,7 @@ class _SearchViewState extends State<SearchView> {
     _scrollController
       ..removeListener(_onScroll)
       ..dispose();
-    context.read<SearchResultBloc>().close();
+    //context.read<SearchResultBloc>().close();
     _controller.dispose();
     super.dispose();
   }

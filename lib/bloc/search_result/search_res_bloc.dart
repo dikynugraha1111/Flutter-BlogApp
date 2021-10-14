@@ -11,7 +11,7 @@ part 'search_res_event.dart';
 part 'search_res_state.dart';
 
 class SearchResultBloc extends Bloc<SearchResultEvent, SearchResultState> {
-  final int _resultAmount = 5;
+  final int _resultAmount = 4;
   int? _currentPage;
   int? _totalPage;
   int? _totalResult;
@@ -55,9 +55,15 @@ class SearchResultBloc extends Bloc<SearchResultEvent, SearchResultState> {
       _currentPage = 1;
       _searchQuery = event.searchQuery;
 
-      emit(SearchResultReady(
-        result: _jsonToResultList(_response.body),
-      ));
+      if (_currentPage == _totalPage || _totalResult == 0) {
+        emit(SearchResultFinish(
+          result: _jsonToResultList(_response.body),
+        ));
+      } else {
+        emit(SearchResultReady(
+          result: _jsonToResultList(_response.body),
+        ));
+      }
     }
   }
 
@@ -80,18 +86,12 @@ class SearchResultBloc extends Bloc<SearchResultEvent, SearchResultState> {
       perPage: '$_resultAmount',
     );
     if (_response == null) {
-      emit(SearchResultError(message: "Something went wrong..."));
+      emit(const SearchResultError(message: "Something went wrong..."));
     } else {
       state.result!.addAll(_jsonToResultList(_response.body));
       emit(SearchResultReady(
         result: state.result,
       ));
     }
-  }
-
-  @override
-  Future<void> close() {
-    state.result?.clear();
-    return super.close();
   }
 }
