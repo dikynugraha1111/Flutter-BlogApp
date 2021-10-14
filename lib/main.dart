@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_blog_app/ui/pages/splash_screen_page.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
 import 'provider/login_page_provider.dart';
+import 'shared/app_route.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -18,7 +18,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -30,11 +29,8 @@ class MyApp extends StatelessWidget {
       builder: (context, widget) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          initialRoute: '/',
-          routes: {
-            '/': (context) => const SplashScreenPage(),
-          },
-          // home: LoginPage(),
+          initialRoute: AppRoute.splashRoute,
+          routes: AppRoute.routes,
         );
       },
     );
