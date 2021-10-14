@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_blog_app/shared/background.dart';
 import 'package:flutter_blog_app/shared/theme.dart';
 
 
@@ -28,7 +29,7 @@ class SearchResultTile extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(5.0),
             child: Image.network(
-              "https://source.unsplash.com/random/350x250?sig=$randomSeed",
+              Background.randomBackground(),
               fit: BoxFit.cover,
               width: 85,
               height: 57,
