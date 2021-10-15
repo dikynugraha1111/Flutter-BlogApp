@@ -47,20 +47,20 @@ class FormLoginWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       obscureText:
-          needObscure ? context.watch<VisibilityPassword>().isVisible : false,
+          needObscure ? context.watch<LoginProvider>().isVisible : false,
       initialValue: initial ? initialText : null,
       keyboardType: inputType,
       inputFormatters: _inputFormatters,
       decoration: InputDecoration(
         suffixIcon: needObscure
-            ? Consumer<VisibilityPassword>(builder: (
+            ? Consumer<LoginProvider>(builder: (
                 context,
                 visible,
                 child,
               ) {
                 return GestureDetector(
                   onTap: () {
-                    context.read<VisibilityPassword>().changeVisible();
+                    context.read<LoginProvider>().changeVisible();
                   },
                   child: Icon(visible.isVisible
                       ? Icons.visibility

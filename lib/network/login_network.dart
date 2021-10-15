@@ -6,7 +6,7 @@ class LoginClient {
       {required String email, required String password}) async {
     Response _response = await post(
       Uri.parse("https://gits-msib.my.id/wp-json/jwt-auth/v1/token"),
-      body: <String, String>{"email": email, "password": password},
+      body: <String, String>{"username": email, "password": password},
     );
 
     return LoginApiModel.fromJson(_response.body);

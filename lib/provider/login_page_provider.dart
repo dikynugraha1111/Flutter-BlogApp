@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class VisibilityPassword extends ChangeNotifier {
+class LoginProvider extends ChangeNotifier {
   bool _isVisible = true;
   bool get isVisible => _isVisible;
 

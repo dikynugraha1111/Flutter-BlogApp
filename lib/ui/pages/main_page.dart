@@ -30,7 +30,7 @@ class MainPage extends StatelessWidget {
                       width: 72,
                     ),
                   ),
-                  Consumer<VisibilityPassword>(
+                  Consumer<LoginProvider>(
                     builder: (context, token, child) {
                       return InkWell(
                         child: Stack(
@@ -57,7 +57,31 @@ class MainPage extends StatelessWidget {
                           token.token == "token"
                               ? Navigator.pushNamed(
                                   context, AppRoute.loginRoute)
-                              : Navigator.of(context).pop();
+                              : showDialog<String>(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      AlertDialog(
+                                    title: const Text('Log Out'),
+                                    content: const Text('Awakmu Arep Metu ta?'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(context, 'Ora'),
+                                        child: const Text('Ora'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          context
+                                              .read<LoginProvider>()
+                                              .changeAccount(
+                                                  "username", "token");
+                                          Navigator.pop(context, 'Iyo');
+                                        },
+                                        child: const Text('Iyo'),
+                                      ),
+                                    ],
+                                  ),
+                                );
                         },
                       );
                     },
@@ -85,7 +109,7 @@ class MainPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 31, left: 10),
                     child: Text(
-                      context.watch<VisibilityPassword>().name,
+                      context.watch<LoginProvider>().name,
                       style: greyTextFont.copyWith(
                           fontWeight: semiBold, fontSize: 20),
                     ),
