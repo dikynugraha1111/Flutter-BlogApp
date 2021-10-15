@@ -21,6 +21,13 @@ class HeaderLogin extends StatelessWidget {
               child: const Icon(Icons.arrow_back_rounded, size: 24.0),
               onTap: back,
             ),
+            const SizedBox(
+              width: 7.0,
+            ),
+            Image.asset(
+              "assets/bitmap/logo.png",
+              width: 48.0,
+            ),
           ],
         ),
         const SizedBox(

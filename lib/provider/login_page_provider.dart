@@ -4,6 +4,9 @@ class LoginProvider extends ChangeNotifier {
   bool _isVisible = true;
   bool get isVisible => _isVisible;
 
+  bool _isCompleted = true;
+  bool get isCompleted => _isCompleted;
+
   String _name = "username";
   String get name => _name;
 
@@ -18,6 +21,11 @@ class LoginProvider extends ChangeNotifier {
   void changeAccount(String name, String token) {
     _name = name;
     _token = token;
+    notifyListeners();
+  }
+
+  void changeStatus() {
+    _isCompleted = !_isCompleted;
     notifyListeners();
   }
 }

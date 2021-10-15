@@ -77,12 +77,13 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     SizedBox(
                       width: MediaQuery.of(context).size.width,
-                      height: 40.0,
+                      height: 45.0,
                       child: ElevatedButton(
                         onPressed: () async {
                           if (!formKey.currentState!.validate()) {
                             return;
                           }
+                          context.read<LoginProvider>().changeStatus();
                           formKey.currentState!.save();
                           LoginApiModel _loginClient =
                               await LoginClient.loginCheck(
@@ -93,11 +94,13 @@ class _LoginPageState extends State<LoginPage> {
                             context.read<LoginProvider>().changeAccount(
                                 _loginClient.userDisplayName!,
                                 _loginClient.token!);
+                            context.read<LoginProvider>().changeStatus();
                             Navigator.pushReplacementNamed(
                               context,
                               AppRoute.mainRoute,
                             );
                           } else {
+                            context.read<LoginProvider>().changeStatus();
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
@@ -114,10 +117,16 @@ class _LoginPageState extends State<LoginPage> {
                             borderRadius: BorderRadius.circular(20.0),
                           ),
                         ),
-                        child: Text(
-                          "Login",
-                          style: whiteTextFont,
-                        ),
+                        child: context.watch<LoginProvider>().isCompleted
+                            ? Text(
+                                "Login",
+                                style: whiteTextFont,
+                              )
+                            : const CircularProgressIndicator(
+                                color: whiteColor,
+                                strokeWidth: 3.0,
+                                semanticsLabel: "Loading...",
+                              ),
                       ),
                     ),
                     const SizedBox(
@@ -135,7 +144,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width,
-                      height: 40.0,
+                      height: 45.0,
                       child: ElevatedButton(
                         onPressed: () {
                           Navigator.pop(context);
