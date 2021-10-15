@@ -149,7 +149,12 @@ class MainPage extends StatelessWidget {
                   shrinkWrap: true,
                   scrollDirection: Axis.vertical,
                   itemCount: 10,
-                  itemBuilder: (_, index) => const MainPostWidget(),
+                  itemBuilder: (_, index) => GestureDetector(
+                    child: const MainPostWidget(),
+                    onTap: () {
+                      Navigator.pushNamed(context, AppRoute.detailRoute);
+                    },
+                  ),
                 ),
               )
             ],
