@@ -1,12 +1,7 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_blog_app/shared/theme.dart';
-import '../../bloc/search_result/search_res_bloc.dart';
-import '../widgets/search/search_text_input.dart';
-import 'package:provider/provider.dart';
 
 import '../widgets/search/search_result_section.dart';
+import '../widgets/search/search_text_input.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -24,10 +19,7 @@ class SearchPage extends StatelessWidget {
           icon: const Icon(Icons.arrow_back, color: Colors.black),
         ),
       ),
-      body: BlocProvider<SearchResultBloc>(
-        create: (_) => SearchResultBloc(),
-        child: const SearchView(),
-      ),
+      body: const SearchView(),
     );
   }
 }
@@ -58,12 +50,7 @@ class _SearchViewState extends State<SearchView> {
     return currentScroll >= (maxScroll * 0.9);
   }
 
-  void _onScroll() {
-    SearchResultBloc _repository = context.read<SearchResultBloc>();
-    if (_isBottom && _repository is! SearchResultFinish) {
-      _repository.add(const SearchResultFetching());
-    }
-  }
+  void _onScroll() {}
 
   @override
   Widget build(BuildContext context) {
@@ -77,26 +64,13 @@ class _SearchViewState extends State<SearchView> {
               controller: _controller,
               label: "Kata Pencarian",
               valueSetter: (val) async {
-                _searchQuery = val ?? '';
-                context.read<SearchResultBloc>().add(
-                      SearchResultInitialized(
-                        searchQuery: _searchQuery,
-                      ),
-                    );
                 setState(() {});
               },
             ),
             const SizedBox(height: 25),
             (_searchQuery != '')
                 ? const SearchResultSection()
-                : Center(
-                    child: Text(
-                      "Search something...",
-                      style: blackTextFont.copyWith(
-                        fontWeight: bold,
-                      ),
-                    ),
-                  ),
+                :  SearchResultSection()
           ],
         ),
       ),

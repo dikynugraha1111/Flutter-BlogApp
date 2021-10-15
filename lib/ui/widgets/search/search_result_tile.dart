@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_blog_app/shared/background.dart';
 import 'package:flutter_blog_app/shared/theme.dart';
 
-
 class SearchResultTile extends StatelessWidget {
   const SearchResultTile({
     Key? key,

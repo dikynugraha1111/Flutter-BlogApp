@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blog_app/shared/theme.dart';
 import 'search_result_tile.dart';
-import '../../../bloc/search_result/search_res_bloc.dart';
-import 'package:provider/provider.dart';
 
 class SearchResultSection extends StatefulWidget {
   const SearchResultSection({Key? key}) : super(key: key);
@@ -14,57 +12,41 @@ class SearchResultSection extends StatefulWidget {
 class _SearchResultSectionState extends State<SearchResultSection> {
   @override
   Widget build(BuildContext context) {
-    SearchResultBloc _repository = context.watch<SearchResultBloc>();
-
-    if (_repository.state is SearchResultReady ||
-        _repository.state is SearchResultLazyLoading ||
-        _repository.state is SearchResultFinish) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Hasil Pencarian: ${_repository.totalResult}",
-            style: blackTextFont.copyWith(
-              fontWeight: bold,
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Hasil Pencarian: 0",
+          style: blackTextFont.copyWith(
+            fontWeight: bold,
           ),
-          const SizedBox(height: 7),
-          ListView.builder(
-            shrinkWrap: true,
-            itemCount: (_repository.state.result!.length),
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 7),
-                child: SearchResultTile(
-                  title: _repository.state.result?[index].title ?? '',
-                ),
-              );
-            },
+        ),
+        const SizedBox(height: 7),
+        ListView.builder(
+          shrinkWrap: true,
+          itemCount: 1,
+          itemBuilder: (context, index) {
+            return const Padding(
+              padding: EdgeInsets.symmetric(vertical: 7),
+              child: SearchResultTile(
+                title: 'List builder',
+              ),
+            );
+          },
+        ),
+        Center(
+          child: TextButton(
+            onPressed: () {},
+            child: Text("Load more...", style: blueTextFont),
           ),
-          if (_repository.state is! SearchResultFinish &&
-              _repository.state is! SearchResultLazyLoading)
-            Center(
-              child: TextButton(
-                onPressed: () {
-                  _repository.add(const SearchResultFetching());
-                },
-                child: Text("Load more...", style: blueTextFont),
-              ),
-            ),
-          if (_repository.state is SearchResultLazyLoading)
-            const Center(
-              child: CircularProgressIndicator(
-                color: Colors.black,
-                strokeWidth: 6.0,
-              ),
-            ),
-        ],
-      );
-    } else {
-      return const CircularProgressIndicator(
-        color: Colors.black,
-        strokeWidth: 6.0,
-      );
-    }
+        ),
+        const Center(
+          child: CircularProgressIndicator(
+            color: Colors.black,
+            strokeWidth: 6.0,
+          ),
+        ),
+      ],
+    );
   }
 }

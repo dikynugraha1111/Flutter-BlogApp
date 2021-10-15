@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_blog_app/model/req_res_login_model.dart';
-import 'package:flutter_blog_app/network/login_network.dart';
 import 'package:flutter_blog_app/provider/login_page_provider.dart';
 import 'package:flutter_blog_app/shared/theme.dart';
 import 'package:flutter_blog_app/ui/widgets/login/form_login_widget.dart';
 import 'package:flutter_blog_app/ui/widgets/login/header_login_widget.dart';
 import 'package:provider/provider.dart';
-import '../../shared/app_route.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -79,38 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                       width: MediaQuery.of(context).size.width,
                       height: 45.0,
                       child: ElevatedButton(
-                        onPressed: () async {
-                          if (!formKey.currentState!.validate()) {
-                            return;
-                          }
-                          context.read<LoginProvider>().changeStatus();
-                          formKey.currentState!.save();
-                          LoginApiModel _loginClient =
-                              await LoginClient.loginCheck(
-                            email: email,
-                            password: password,
-                          );
-                          if (_loginClient.code == null) {
-                            context.read<LoginProvider>().changeAccount(
-                                _loginClient.userDisplayName!,
-                                _loginClient.token!);
-                            context.read<LoginProvider>().changeStatus();
-                            Navigator.pushReplacementNamed(
-                              context,
-                              AppRoute.mainRoute,
-                            );
-                          } else {
-                            context.read<LoginProvider>().changeStatus();
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  _loginClient.code ??
-                                      'Oops! Something is wrong...',
-                                ),
-                              ),
-                            );
-                          }
-                        },
+                        onPressed: () async {},
                         style: ElevatedButton.styleFrom(
                           primary: blueColor,
                           shape: RoundedRectangleBorder(
