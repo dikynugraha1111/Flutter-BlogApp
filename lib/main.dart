@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: <SingleChildWidget>[
         ChangeNotifierProvider(
-          create: (BuildContext context) => VisibilityPassword(),
+          create: (BuildContext context) => LoginProvider(),
         ),
       ],
       builder: (context, widget) {

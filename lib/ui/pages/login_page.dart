@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_blog_app/model/req_res_login_model.dart';
 import 'package:flutter_blog_app/network/login_network.dart';
@@ -48,14 +46,8 @@ class _LoginPageState extends State<LoginPage> {
                   maxLength: 33,
                   validator: (String? value) {
                     if (value!.isEmpty) {
-                      return 'Email is Required';
+                      return 'Email/Username is Required';
                     }
-                    if (!RegExp(
-                            r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
-                        .hasMatch(value)) {
-                      return 'Tolong Masukan Email yang benar';
-                    }
-
                     return null;
                   },
                   onSaved: (String? value) {
@@ -63,6 +55,7 @@ class _LoginPageState extends State<LoginPage> {
                   },
                 ),
                 FormLoginWidget(
+                  inputType: TextInputType.text,
                   hintText: "Masukan Password",
                   labelText: "Password",
                   maxLength: 33,
@@ -97,10 +90,9 @@ class _LoginPageState extends State<LoginPage> {
                             password: password,
                           );
                           if (_loginClient.code == null) {
-                            context.read<VisibilityPassword>().changeAccount(
+                            context.read<LoginProvider>().changeAccount(
                                 _loginClient.userDisplayName!,
                                 _loginClient.token!);
-
                             Navigator.pushReplacementNamed(
                               context,
                               AppRoute.mainRoute,
