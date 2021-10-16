@@ -3,7 +3,8 @@ import 'package:flutter_blog_app/shared/background.dart';
 import 'package:flutter_blog_app/shared/theme.dart';
 
 class MainPostWidget extends StatelessWidget {
-  const MainPostWidget({Key? key}) : super(key: key);
+  final String? title;
+  const MainPostWidget({Key? key, required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class MainPostWidget extends StatelessWidget {
       Padding(
         padding: const EdgeInsets.fromLTRB(12, 0, 29, 40),
         child: Text(
-          'ListView pada Flutter dengan Item Builder',
+          title!,
           style: whiteTextFont.copyWith(fontWeight: bold, fontSize: 20),
           maxLines: 2,
           overflow: TextOverflow.ellipsis,

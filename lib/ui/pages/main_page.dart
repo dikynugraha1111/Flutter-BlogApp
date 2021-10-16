@@ -1,5 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_blog_app/bloc/post_bloc.dart';
+import 'package:flutter_blog_app/bloc/post_event.dart';
+import 'package:flutter_blog_app/bloc/post_state.dart';
+import 'package:flutter_blog_app/model/post_model.dart';
 import 'package:flutter_blog_app/shared/app_route.dart';
 import 'package:flutter_blog_app/shared/theme.dart';
 import 'package:flutter_blog_app/ui/widgets/main/main_post_widget.dart';
@@ -8,11 +13,26 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../shared/photo.dart';
 
-class MainPage extends StatelessWidget {
+class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
 
   @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+
+  
+  @override
+  void initState() {
+    PostBloc bloc = BlocProvider.of<PostBloc>(context);
+    bloc.add(FetchPost());
+    super.initState();
+  }
+  
+  @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -108,22 +128,33 @@ class MainPage extends StatelessWidget {
               const SizedBox(
                 height: 58,
               ),
-              Container(
-                width: 352,
-                alignment: Alignment.center,
-                child: ListView.builder(
-                  primary: false,
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  itemCount: 10,
-                  itemBuilder: (_, index) => GestureDetector(
-                    child: const MainPostWidget(),
-                    onTap: () {
-                      Navigator.pushNamed(context, AppRoute.detailRoute);
-                    },
+             Container(
+                  width: 352,
+                  alignment: Alignment.center,
+                  child:  BlocBuilder<PostBloc, PostState>(
+                    builder: (context, state) {
+                      if (state is PostLoaded) {
+                        List<PostModel> posts = state.posts;
+                        var title = posts.map((e) => e.title!.rendered).toList();
+
+                        return ListView.builder(
+                          primary: false,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          itemCount: posts.length,
+                          itemBuilder: (_, index) => GestureDetector(
+                            child: MainPostWidget(title: title[index],),
+                            onTap: () {
+                              Navigator.pushNamed(context, AppRoute.detailRoute);
+                            },
+                          ),
+                        );
+                      }
+                      return Container();
+                    }
+
                   ),
                 ),
-              )
             ],
           ),
         ),
