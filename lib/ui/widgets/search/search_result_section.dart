@@ -30,6 +30,7 @@ class _SearchResultSectionState extends State<SearchResultSection> {
           ),
           const SizedBox(height: 7),
           ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: (_repository.state.result!.length),
             itemBuilder: (context, index) {
