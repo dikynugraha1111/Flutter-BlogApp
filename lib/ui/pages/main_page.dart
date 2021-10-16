@@ -9,6 +9,7 @@ import 'package:flutter_blog_app/shared/app_route.dart';
 import 'package:flutter_blog_app/shared/theme.dart';
 import 'package:flutter_blog_app/ui/widgets/main/main_post_widget.dart';
 import 'package:flutter_blog_app/ui/widgets/main/quarter_circle_widget.dart';
+import 'package:flutter_blog_app/ui/widgets/main/shimmer_post_widget.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../shared/photo.dart';
@@ -149,8 +150,15 @@ class _MainPageState extends State<MainPage> {
                         },
                       ),
                     );
+                  } else {
+                    return ListView.builder(
+                      primary: false,
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      itemCount: 6,
+                      itemBuilder: (_, index) => const ShimmerPostWidget(),
+                    );
                   }
-                  return Container();
                 }),
               ),
             ],
