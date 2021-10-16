@@ -1,14 +1,26 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_blog_app/shared/background.dart';
-import 'package:flutter_blog_app/shared/theme.dart';
+import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_blog_app/model/post_model.dart';
+import 'package:flutter_blog_app/network/search_network.dart';
+import '../../../shared/app_route.dart';
+import '../../../shared/background.dart';
+import '../../../shared/theme.dart';
 
 class SearchResultTile extends StatelessWidget {
   const SearchResultTile({
     Key? key,
+    required this.id,
     required this.title,
   }) : super(key: key);
   final String title;
+  final int id;
+
+  dynamic getPost() async {
+    dynamic response = await SearchNetwork().getPostDetail(id: id);
+    PostModel post = PostModel.fromMap(jsonDecode(response.body));
+    return post;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +63,13 @@ class SearchResultTile extends StatelessWidget {
                     ),
                   ),
                   // TODO: URL Launcher
-                  onPressed: () {},
+                  onPressed: () async {
+                    Navigator.pushNamed(
+                      context,
+                      AppRoute.detailRoute,
+                      arguments: await getPost(),
+                    );
+                  },
                   child: Text(
                     "Baca Selengkapnya >>",
                     style: blueTextFont,

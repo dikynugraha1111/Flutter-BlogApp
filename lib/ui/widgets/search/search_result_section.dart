@@ -37,6 +37,7 @@ class _SearchResultSectionState extends State<SearchResultSection> {
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 7),
                 child: SearchResultTile(
+                  id: _repository.state.result?[index].id ?? 0,
                   title: _repository.state.result?[index].title ?? '',
                 ),
               );

@@ -2,7 +2,8 @@ import 'package:http/http.dart' as http;
 
 class SearchNetwork {
   final String authorityUrl = "gits-msib.my.id";
-  final String endpointUrl = "/wp-json/wp/v2/search";
+  final String searchEndpointUrl = "/wp-json/wp/v2/search";
+  final String postEndpointUrl = "/wp-json/wp/v2/posts";
 
   Future<dynamic> getResponse({
     required String query,
@@ -17,7 +18,20 @@ class SearchNetwork {
       'search': query,
     };
     try {
-      final uri = Uri.https(authorityUrl, endpointUrl, queryParams);
+      final uri = Uri.https(authorityUrl, searchEndpointUrl, queryParams);
+      response = await http.get(uri);
+    } catch (_) {
+      print("Something went wrong.");
+    }
+    return response;
+  }
+
+  Future<dynamic> getPostDetail({
+    required int id,
+  }) async {
+    dynamic response;
+    try {
+      final uri = Uri.https(authorityUrl, "$postEndpointUrl/$id");
       response = await http.get(uri);
     } catch (_) {
       print("Something went wrong.");
