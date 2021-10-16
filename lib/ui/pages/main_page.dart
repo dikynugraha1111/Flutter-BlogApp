@@ -21,18 +21,15 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-
-  
   @override
   void initState() {
     PostBloc bloc = BlocProvider.of<PostBloc>(context);
     bloc.add(FetchPost());
     super.initState();
   }
-  
+
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -128,33 +125,34 @@ class _MainPageState extends State<MainPage> {
               const SizedBox(
                 height: 58,
               ),
-             Container(
-                  width: 352,
-                  alignment: Alignment.center,
-                  child:  BlocBuilder<PostBloc, PostState>(
-                    builder: (context, state) {
-                      if (state is PostLoaded) {
-                        List<PostModel> posts = state.posts;
-                        var title = posts.map((e) => e.title!.rendered).toList();
+              Container(
+                width: 352,
+                alignment: Alignment.center,
+                child:
+                    BlocBuilder<PostBloc, PostState>(builder: (context, state) {
+                  if (state is PostLoaded) {
+                    List<PostModel> posts = state.posts;
+                    var title = posts.map((e) => e.title!.rendered).toList();
 
-                        return ListView.builder(
-                          primary: false,
-                          shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          itemCount: posts.length,
-                          itemBuilder: (_, index) => GestureDetector(
-                            child: MainPostWidget(title: title[index],),
-                            onTap: () {
-                              Navigator.pushNamed(context, AppRoute.detailRoute, arguments: posts[index]);
-                            },
-                          ),
-                        );
-                      }
-                      return Container();
-                    }
-
-                  ),
-                ),
+                    return ListView.builder(
+                      primary: false,
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      itemCount: posts.length,
+                      itemBuilder: (_, index) => GestureDetector(
+                        child: MainPostWidget(
+                          title: title[index],
+                        ),
+                        onTap: () {
+                          Navigator.pushNamed(context, AppRoute.detailRoute,
+                              arguments: posts[index]);
+                        },
+                      ),
+                    );
+                  }
+                  return Container();
+                }),
+              ),
             ],
           ),
         ),

@@ -1,16 +1,16 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_blog_app/model/post_model.dart';
 
-abstract class PostState extends Equatable{
+abstract class PostState extends Equatable {
   const PostState();
 }
 
-class PostInitial extends PostState{
+class PostInitial extends PostState {
   @override
   List<Object?> get props => [];
 }
 
-class PostLoaded extends PostState{
+class PostLoaded extends PostState {
   final List<PostModel> posts;
 
   PostLoaded({required this.posts});
