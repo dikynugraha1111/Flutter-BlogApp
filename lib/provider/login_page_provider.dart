@@ -7,7 +7,7 @@ class LoginProvider extends ChangeNotifier {
   bool _isCompleted = true;
   bool get isCompleted => _isCompleted;
 
-  String _name = "username";
+  String _name = "";
   String get name => _name;
 
   String _token = "token";

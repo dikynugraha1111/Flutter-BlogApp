@@ -1,12 +1,11 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_blog_app/shared/theme.dart';
-import '../../bloc/search_result/search_res_bloc.dart';
-import '../widgets/search/search_text_input.dart';
 import 'package:provider/provider.dart';
 
+import '../../bloc/search_result/search_res_bloc.dart';
 import '../widgets/search/search_result_section.dart';
+import '../widgets/search/search_text_input.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -68,7 +67,7 @@ class _SearchViewState extends State<SearchView> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      controller: _scrollController,
+      // controller: _scrollController,
       child: Container(
         padding: const EdgeInsets.all(20.0),
         child: Column(
