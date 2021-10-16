@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
+import 'bloc/post/post_bloc.dart';
 import 'provider/login_page_provider.dart';
 import 'shared/app_route.dart';
 
@@ -20,19 +22,29 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: <SingleChildWidget>[
-        ChangeNotifierProvider(
-          create: (BuildContext context) => LoginProvider(),
-        ),
+    // return MultiProvider(
+    //   providers: <SingleChildWidget>[
+    //     ChangeNotifierProvider(
+    //       create: (BuildContext context) => LoginProvider(),
+    //     ),
+    //   ],
+    //   builder: (context, widget) {
+    //     return MaterialApp(
+    //       debugShowCheckedModeBanner: false,
+    //       initialRoute: AppRoute.splashRoute,
+    //       routes: AppRoute.routes,
+    //     );
+    //   },
+    // );
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<PostBloc>(create: (context) => PostBloc()),
       ],
-      builder: (context, widget) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          initialRoute: AppRoute.splashRoute,
-          routes: AppRoute.routes,
-        );
-      },
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        initialRoute: AppRoute.splashRoute,
+        routes: AppRoute.routes,
+      ),
     );
   }
 }
