@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_blog_app/provider/login_page_provider.dart';
 import 'package:flutter_blog_app/shared/app_route.dart';
 import 'package:flutter_blog_app/shared/theme.dart';
 import 'package:flutter_blog_app/ui/widgets/main/main_post_widget.dart';
 import 'package:flutter_blog_app/ui/widgets/main/quarter_circle_widget.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
 
 import '../../shared/photo.dart';
 
@@ -30,62 +28,31 @@ class MainPage extends StatelessWidget {
                       width: 72,
                     ),
                   ),
-                  Consumer<LoginProvider>(
-                    builder: (context, token, child) {
-                      return InkWell(
-                        child: Stack(
-                          alignment: Alignment.centerRight,
-                          children: <Widget>[
-                            const SizedBox(
-                              width: 55,
-                              height: 55,
-                              child: QuarterCircle(
-                                circleAlignment: CircleAlignment.topRight,
-                                color: greyColor,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 10),
-                              child: SvgPicture.asset(
-                                'assets/vector/ic_switch_account.svg',
-                                width: 30,
-                              ),
-                            )
-                          ],
+                  InkWell(
+                    child: Stack(
+                      alignment: Alignment.centerRight,
+                      children: <Widget>[
+                        const SizedBox(
+                          width: 55,
+                          height: 55,
+                          child: QuarterCircle(
+                            circleAlignment: CircleAlignment.topRight,
+                            color: greyColor,
+                          ),
                         ),
-                        onTap: () {
-                          token.token == "token"
-                              ? Navigator.pushNamed(
-                                  context, AppRoute.loginRoute)
-                              : showDialog<String>(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      AlertDialog(
-                                    title: const Text('Log Out'),
-                                    content: const Text('Awakmu Arep Metu ta?'),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(context, 'Ora'),
-                                        child: const Text('Ora'),
-                                      ),
-                                      TextButton(
-                                        onPressed: () {
-                                          context
-                                              .read<LoginProvider>()
-                                              .changeAccount(
-                                                  "username", "token");
-                                          Navigator.pop(context, 'Iyo');
-                                        },
-                                        child: const Text('Iyo'),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                        },
-                      );
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: SvgPicture.asset(
+                            'assets/vector/ic_switch_account.svg',
+                            width: 30,
+                          ),
+                        )
+                      ],
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(context, AppRoute.loginRoute);
                     },
-                  )
+                  ),
                 ],
               ),
               Row(
@@ -109,7 +76,7 @@ class MainPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 31, left: 10),
                     child: Text(
-                      context.watch<LoginProvider>().name,
+                      'username',
                       style: greyTextFont.copyWith(
                           fontWeight: semiBold, fontSize: 20),
                     ),

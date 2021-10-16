@@ -70,7 +70,7 @@ class _SearchViewState extends State<SearchView> {
             const SizedBox(height: 25),
             (_searchQuery != '')
                 ? const SearchResultSection()
-                :  SearchResultSection()
+                : SearchResultSection()
           ],
         ),
       ),

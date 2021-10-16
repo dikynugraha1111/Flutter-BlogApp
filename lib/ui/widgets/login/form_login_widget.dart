@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_blog_app/provider/login_page_provider.dart';
-import 'package:provider/provider.dart';
 
 class FormLoginWidget extends StatelessWidget {
   final String hintText;
@@ -46,28 +44,13 @@ class FormLoginWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      obscureText:
-          needObscure ? context.watch<LoginProvider>().isVisible : false,
+      obscureText: true,
       initialValue: initial ? initialText : null,
       keyboardType: inputType,
       inputFormatters: _inputFormatters,
       decoration: InputDecoration(
-        suffixIcon: needObscure
-            ? Consumer<LoginProvider>(builder: (
-                context,
-                visible,
-                child,
-              ) {
-                return GestureDetector(
-                  onTap: () {
-                    context.read<LoginProvider>().changeVisible();
-                  },
-                  child: Icon(visible.isVisible
-                      ? Icons.visibility
-                      : Icons.visibility_off),
-                );
-              })
-            : null,
+        suffixIcon:
+            GestureDetector(onTap: () {}, child: const Icon(Icons.visibility)),
         hintText: hintText,
         labelText: labelText,
         border: OutlineInputBorder(

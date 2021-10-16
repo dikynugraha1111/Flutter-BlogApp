@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_blog_app/provider/login_page_provider.dart';
 import 'package:flutter_blog_app/shared/theme.dart';
 import 'package:flutter_blog_app/ui/widgets/login/form_login_widget.dart';
 import 'package:flutter_blog_app/ui/widgets/login/header_login_widget.dart';
-import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -43,8 +41,14 @@ class _LoginPageState extends State<LoginPage> {
                   maxLength: 33,
                   validator: (String? value) {
                     if (value!.isEmpty) {
-                      return 'Email/Username is Required';
+                      return 'Email is Required';
                     }
+                    if (!RegExp(
+                            r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+                        .hasMatch(value)) {
+                      return 'Tolong Masukan Email yang benar';
+                    }
+
                     return null;
                   },
                   onSaved: (String? value) {
@@ -52,7 +56,6 @@ class _LoginPageState extends State<LoginPage> {
                   },
                 ),
                 FormLoginWidget(
-                  inputType: TextInputType.text,
                   hintText: "Masukan Password",
                   labelText: "Password",
                   maxLength: 33,
@@ -74,25 +77,19 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     SizedBox(
                       width: MediaQuery.of(context).size.width,
-                      height: 45.0,
+                      height: 40.0,
                       child: ElevatedButton(
-                        onPressed: () async {},
+                        onPressed: () {},
                         style: ElevatedButton.styleFrom(
                           primary: blueColor,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20.0),
                           ),
                         ),
-                        child: context.watch<LoginProvider>().isCompleted
-                            ? Text(
-                                "Login",
-                                style: whiteTextFont,
-                              )
-                            : const CircularProgressIndicator(
-                                color: whiteColor,
-                                strokeWidth: 3.0,
-                                semanticsLabel: "Loading...",
-                              ),
+                        child: Text(
+                          "Login",
+                          style: whiteTextFont,
+                        ),
                       ),
                     ),
                     const SizedBox(
@@ -110,11 +107,9 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width,
-                      height: 45.0,
+                      height: 40.0,
                       child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
+                        onPressed: () {},
                         style: ElevatedButton.styleFrom(
                           primary: whiteColor,
                           shape: RoundedRectangleBorder(

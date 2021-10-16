@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
-import 'package:provider/single_child_widget.dart';
 
-import 'provider/login_page_provider.dart';
 import 'shared/app_route.dart';
 
 void main() {
@@ -20,19 +17,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: <SingleChildWidget>[
-        ChangeNotifierProvider(
-          create: (BuildContext context) => LoginProvider(),
-        ),
-      ],
-      builder: (context, widget) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          initialRoute: AppRoute.splashRoute,
-          routes: AppRoute.routes,
-        );
-      },
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      initialRoute: AppRoute.splashRoute,
+      routes: AppRoute.routes,
     );
   }
 }
