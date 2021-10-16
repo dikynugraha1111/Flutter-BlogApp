@@ -67,7 +67,7 @@ class _SearchViewState extends State<SearchView> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      // controller: _scrollController,
+      controller: _scrollController,
       child: Container(
         padding: const EdgeInsets.all(20.0),
         child: Column(
