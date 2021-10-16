@@ -145,7 +145,7 @@ class _MainPageState extends State<MainPage> {
                           itemBuilder: (_, index) => GestureDetector(
                             child: MainPostWidget(title: title[index],),
                             onTap: () {
-                              Navigator.pushNamed(context, AppRoute.detailRoute);
+                              Navigator.pushNamed(context, AppRoute.detailRoute, arguments: posts[index]);
                             },
                           ),
                         );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_blog_app/model/post_model.dart';
 import 'package:flutter_blog_app/shared/theme.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -19,6 +20,7 @@ class _DetailPageState extends State<DetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    var post = ModalRoute.of(context)?.settings.arguments as PostModel?;
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -37,7 +39,7 @@ class _DetailPageState extends State<DetailPage> {
                   Container(
                     width: 222,
                     child: Text(
-                      'ListView pada Flutter dengan Item Builder',
+                      post!.title!.rendered!,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: blackTextFont,
@@ -47,10 +49,9 @@ class _DetailPageState extends State<DetailPage> {
                 ],
               ),
             ),
-            const Expanded(
+            Expanded(
               child: WebView(
-                initialUrl:
-                    'https://gits-msib.my.id/doofensmith/listview-pada-flutter-dengan-item-builder/',
+                initialUrl: post.link,
                 javascriptMode: JavascriptMode.unrestricted,
               ),
             ),
