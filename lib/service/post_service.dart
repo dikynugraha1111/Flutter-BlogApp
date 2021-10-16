@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 class PostService{
   static Future<List<PostModel>> getPosts({http.Client? client}) async{
-    String url = "${baseUrl}posts";
+    String url = "${baseUrl}wp/v2/posts";
 
     client ??= http.Client();
 

@@ -1,1 +1,1 @@
-String baseUrl = "https://gits-msib.my.id/wp-json/wp/v2/";
+String baseUrl = "https://gits-msib.my.id/wp-json/";
