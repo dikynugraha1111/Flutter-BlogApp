@@ -5,12 +5,14 @@ import 'package:flutter_blog_app/bloc/post/post_bloc.dart';
 import 'package:flutter_blog_app/bloc/post/post_event.dart';
 import 'package:flutter_blog_app/bloc/post/post_state.dart';
 import 'package:flutter_blog_app/model/post_model.dart';
+import 'package:flutter_blog_app/provider/login_page_provider.dart';
 import 'package:flutter_blog_app/shared/app_route.dart';
 import 'package:flutter_blog_app/shared/theme.dart';
 import 'package:flutter_blog_app/ui/widgets/main/main_post_widget.dart';
 import 'package:flutter_blog_app/ui/widgets/main/quarter_circle_widget.dart';
 import 'package:flutter_blog_app/ui/widgets/main/shimmer_post_widget.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 import '../../shared/photo.dart';
 
@@ -62,32 +64,62 @@ class _MainPageDetailState extends State<MainPageDetail> {
                      'assets/bitmap/logo.png',
                      width: 72,
                    ),
-                 ),
-                 InkWell(
-                   child: Stack(
-                     alignment: Alignment.centerRight,
-                     children: <Widget>[
-                       const SizedBox(
-                         width: 55,
-                         height: 55,
-                         child: QuarterCircle(
-                           circleAlignment: CircleAlignment.topRight,
-                           color: greyColor,
-                         ),
+                 ),Consumer<LoginProvider>(
+                   builder: (context, token, child) {
+                     return InkWell(
+                       child: Stack(
+                         alignment: Alignment.centerRight,
+                         children: <Widget>[
+                           const SizedBox(
+                             width: 55,
+                             height: 55,
+                             child: QuarterCircle(
+                               circleAlignment: CircleAlignment.topRight,
+                               color: greyColor,
+                             ),
+                           ),
+                           Padding(
+                             padding: const EdgeInsets.only(bottom: 10),
+                             child: SvgPicture.asset(
+                               'assets/vector/ic_switch_account.svg',
+                               width: 30,
+                             ),
+                           )
+                         ],
                        ),
-                       Padding(
-                         padding: const EdgeInsets.only(bottom: 10),
-                         child: SvgPicture.asset(
-                           'assets/vector/ic_switch_account.svg',
-                           width: 30,
-                         ),
-                       )
-                     ],
-                   ),
-                   onTap: () {
-                     Navigator.pushNamed(context, AppRoute.loginRoute);
+                       onTap: () {
+                         token.token == "token"
+                             ? Navigator.pushNamed(
+                             context, AppRoute.loginRoute)
+                             : showDialog<String>(
+                           context: context,
+                           builder: (BuildContext context) =>
+                               AlertDialog(
+                                 title: const Text('Log Out'),
+                                 content: const Text('Awakmu Arep Metu ta?'),
+                                 actions: <Widget>[
+                                   TextButton(
+                                     onPressed: () =>
+                                         Navigator.pop(context, 'Ora'),
+                                     child: const Text('Ora'),
+                                   ),
+                                   TextButton(
+                                     onPressed: () {
+                                       context
+                                           .read<LoginProvider>()
+                                           .changeAccount(
+                                           "username", "token");
+                                       Navigator.pop(context, 'Iyo');
+                                     },
+                                     child: const Text('Iyo'),
+                                   ),
+                                 ],
+                               ),
+                         );
+                       },
+                     );
                    },
-                 ),
+                 )
                ],
              ),
              Row(
@@ -108,13 +140,14 @@ class _MainPageDetailState extends State<MainPageDetail> {
                          fit: BoxFit.cover),
                    ),
                  ),
-                 Padding(
+                 Container(
                    padding: const EdgeInsets.only(top: 31, left: 10),
-                   child: Text(
-                     'username',
-                     style: greyTextFont.copyWith(
-                         fontWeight: semiBold, fontSize: 20),
-                   ),
+                   width: 150,
+                   child: Text(context.watch<LoginProvider>().name,
+                       style: greyTextFont.copyWith(
+                           fontWeight: semiBold, fontSize: 20),
+                       maxLines: 1,
+                       overflow: TextOverflow.ellipsis),
                  ),
                  Expanded(child: Container()),
                  GestureDetector(
