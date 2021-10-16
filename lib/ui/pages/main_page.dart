@@ -106,13 +106,14 @@ class MainPage extends StatelessWidget {
                           fit: BoxFit.cover),
                     ),
                   ),
-                  Padding(
+                  Container(
                     padding: const EdgeInsets.only(top: 31, left: 10),
-                    child: Text(
-                      context.watch<LoginProvider>().name,
-                      style: greyTextFont.copyWith(
-                          fontWeight: semiBold, fontSize: 20),
-                    ),
+                    width: 150,
+                    child: Text(context.watch<LoginProvider>().name,
+                        style: greyTextFont.copyWith(
+                            fontWeight: semiBold, fontSize: 20),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis),
                   ),
                   Expanded(child: Container()),
                   GestureDetector(
