@@ -1,6 +1,8 @@
 import 'dart:convert';
 
-class LoginApiModel {
+import 'package:equatable/equatable.dart';
+
+class LoginApiModel extends Equatable {
   LoginApiModel({
     this.token,
     this.userEmail,
@@ -45,4 +47,9 @@ class LoginApiModel {
         "user_display_name": userDisplayName == null ? null : userDisplayName,
         "code": code == null ? null : code,
       };
+
+  @override
+  List<Object?> get props => [
+        userEmail,
+      ];
 }

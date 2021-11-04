@@ -42,6 +42,7 @@ dependencies:
   flutter_bloc: ^7.3.0
   webview_flutter: ^2.1.1
   shimmer: ^2.0.0
+  mockito:
 
 dev_dependencies:
   flutter_test:
